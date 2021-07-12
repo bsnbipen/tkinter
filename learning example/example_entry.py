@@ -1,0 +1,16 @@
+import tkinter as tk
+window=tk.Tk()
+label=tk.Label(text="Enter Your Name:",fg="White",bg="Black")
+entry=tk.Entry()
+label.pack()
+entry.pack()
+user_entry=entry.get()
+window.mainloop()
+
+window=tk.Tk()
+label_2=tk.Label(text=user_entry)
+entry_2=tk.Entry(text="Bipendra")
+entry_2.insert(7,"is my Master")
+label_2.pack()
+entry_2.pack()
+window.mainloop()
