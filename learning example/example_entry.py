@@ -1,16 +1,13 @@
 import tkinter as tk
 window=tk.Tk()
-label=tk.Label(text="Enter Your Name:",fg="White",bg="Black")
-entry=tk.Entry()
-label.pack()
-entry.pack()
-user_entry=entry.get()
-window.mainloop()
 
-window=tk.Tk()
-label_2=tk.Label(text=user_entry)
-entry_2=tk.Entry(text="Bipendra")
-entry_2.insert(7,"is my Master")
-label_2.pack()
-entry_2.pack()
+frame_1=tk.Frame(master=window,height=40,bg="red")
+frame_1.pack(fill=tk.X)
+
+frame_2=tk.Frame(master=window,height=40,bg="pink")
+frame_2.pack(fill=tk.X)
+
+frame_3=tk.Frame(master=window,height=40,bg="yellow")
+frame_3.pack(fill=tk.X)
+
 window.mainloop()
