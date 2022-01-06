@@ -1,5 +1,8 @@
-
 from tkinter import *
-root=Tk()
-Button(root,text="Press Me to Exit", command=root.quit).pack(side=LEFT,expand=YES,fill=BOTH)
-root.mainloop()
+
+win=Frame()
+win.pack(expand=YES,fill=BOTH)
+Button(win,text="Quit").pack(side=LEFT, anchor=N)
+Label(win,text="I am here second").pack(side=TOP)
+Button(win,text="Press Me").pack(side=BOTTOM)
+win.mainloop()
