@@ -1,15 +1,17 @@
+import decimal
 from tkinter import *
 from tkinter import font
 from os import *
 from PIL import Image, ImageTk
+from decimal import *
 
 
-
+getcontext().prec=5
 class speedentry(Frame):
     def __init__(self, parent=None):
         Frame.__init__(self,parent)
         self.pack()
-        self.entr_speed=Entry(self,width=5,borderwidth=3)
+        self.entr_speed=Entry(self,width=10,borderwidth=3)
         self.entr_speed.insert(0,"5")
         self.lbl_speed=Label(self,text="Travel(MM):",font=('courier','12','bold'))
         self.entr_speed.pack(side=RIGHT,expand=YES,fill=BOTH)
@@ -18,7 +20,8 @@ class speedentry(Frame):
 
 if __name__=="__main__":
     root=Tk()
-    
+    main_frame=Frame(root)
+    main_frame.pack()
     #travel distance variables
     distance_trv=1
     distance_trv_lft=1
@@ -26,9 +29,22 @@ if __name__=="__main__":
     distance_trv_dwn=1
 
     #for distance display
-    display_frame=Frame(root)
+
+    #display frame indivisual axis
+    display_frame=Frame(main_frame)
     display_frame.pack(side=TOP)
-    lbl_x=Label(display_frame,
+
+#for x axis
+    display_frame_x=Frame(display_frame)
+    display_frame_x.pack(side=TOP)
+    lbl_x_distance=Label(display_frame_x,
+                        text="X Axis", 
+                        background="Black",
+                        fg="White",
+                        font=("courier",18,"bold"),
+                        justify=CENTER)
+
+    lbl_x=Label(display_frame_x,
                         text=str(distance_trv),
                         background='white',
                         fg="black",
@@ -36,8 +52,20 @@ if __name__=="__main__":
                         justify=CENTER,
                         width=20,
                         borderwidth=5)
+    lbl_x.pack(side=RIGHT,pady=1)
+    lbl_x_distance.pack(side=LEFT)
 
-    lbl_y=Label(display_frame,
+
+#for y axis
+    display_frame_y=Frame(display_frame)
+    display_frame_y.pack(side=TOP)
+    lbl_y_distance=Label(display_frame_y,
+                        text="Y Axis", 
+                        background="Black",
+                        fg="White",
+                        font=("courier",18,"bold"),
+                        justify=CENTER)
+    lbl_y=Label(display_frame_y,
                         text=str(distance_trv_lft),
                         background='white',
                         fg="black",
@@ -45,8 +73,19 @@ if __name__=="__main__":
                         justify=CENTER,
                         width=20,
                         borderwidth=5)
+    lbl_y.pack(side=RIGHT,pady=1)
+    lbl_y_distance.pack(side=LEFT)
 
-    lbl_z=Label(display_frame,
+#for Z-Axis
+    display_frame_z=Frame(display_frame)
+    display_frame_z.pack(side=BOTTOM)
+    lbl_z_distance=Label(display_frame_z,
+                        text="Z Axis", 
+                        background="Black",
+                        fg="White",
+                        font=("courier",18,"bold"),
+                        justify=CENTER)
+    lbl_z=Label(display_frame_z,
                         text=str(distance_trv_rht),
                         background='white',
                         fg="black",
@@ -54,25 +93,25 @@ if __name__=="__main__":
                         justify=CENTER,
                         width=20,
                         borderwidth=5)
+    lbl_z.pack(side=RIGHT,pady=1)
+    lbl_z_distance.pack(side=LEFT)
+    
 
-    lbl_x.pack(side=TOP,pady=1)
-    lbl_y.pack(side=BOTTOM,pady=2)
-    lbl_z.pack(side=BOTTOM,pady=1)
-    #for speed entry
-    speed_entry=speedentry(root)
     # get the current working directory
     cw_dir=getcwd()
-    img_dir=cw_dir+r"/images/direction.png"
+    img_dir=cw_dir+r"/tkinter/images/direction.png"
     
     #travel distance variables
     distance_trv=1
     distance_trv_lft=1
-
+    #for up button Z axis
+    distance_trv_z=0
 
     #frames
-    direction_frame=Frame(root)
-    direction_frame.pack(expand=YES,fill=BOTH)
-    
+    direction_frame=Frame(main_frame)
+    direction_frame.pack(side=LEFT,expand=YES,fill=BOTH)
+    #for speed entry
+    speed_entry=speedentry(direction_frame)
     #icn for direction button
     direction_img=Image.open(img_dir)
     direction_img=direction_img.resize((50,50),Image.ANTIALIAS)
@@ -81,7 +120,7 @@ if __name__=="__main__":
     def direction_up():
         global distance_trv
         travel_val=speed_entry.entr_speed.get()
-        distance_trv=float(travel_val)+distance_trv
+        distance_trv=Decimal(travel_val)+Decimal(distance_trv)
         lbl_x.config(text=distance_trv)
         print(distance_trv)
 
@@ -98,7 +137,7 @@ if __name__=="__main__":
     def direction_left():
         global distance_trv_lft
         travel_val=speed_entry.entr_speed.get()
-        distance_trv_lft=distance_trv_lft-float(travel_val)
+        distance_trv_lft=Decimal(distance_trv_lft)-Decimal(travel_val)
         lbl_y.config(text=distance_trv_lft)
         print(distance_trv_lft)
     
@@ -113,7 +152,7 @@ if __name__=="__main__":
     def direction_right():
         global distance_trv_lft
         travel_val=speed_entry.entr_speed.get()
-        distance_trv_lft=float(travel_val)+distance_trv_lft
+        distance_trv_lft=Decimal(travel_val)+Decimal(distance_trv_lft)
         lbl_y.config(text=distance_trv_lft)
         print(distance_trv_rht)
 
@@ -126,7 +165,7 @@ if __name__=="__main__":
     def direction_down():
         global distance_trv
         travel_val=speed_entry.entr_speed.get()
-        distance_trv=distance_trv-float(travel_val)
+        distance_trv=Decimal(distance_trv)-Decimal(travel_val)
         lbl_x.config(text=distance_trv)
         print(distance_trv_dwn)
     
@@ -137,4 +176,42 @@ if __name__=="__main__":
     dwn_icn=ImageTk.PhotoImage(direction_img)
     btn_dwn=Button(dwn_frame,image=dwn_icn,command=direction_down,borderwidth=0)
     btn_dwn.pack(side=TOP)
+    
+    #direction frames for z buttons
+    #frames
+    direction_frame_z=Frame(main_frame)
+    direction_frame_z.pack(side=RIGHT,expand=YES,fill=BOTH)
+    #for speed entry
+    speed_entry_z=speedentry(direction_frame_z)
+    
+
+
+    def direction_up_z():
+        global distance_trv_z
+        travel_val=speed_entry_z.entr_speed.get()
+        distance_trv_z=Decimal(travel_val)+Decimal(distance_trv_z)
+        lbl_z.config(text=distance_trv_z)
+        print(distance_trv_z)
+
+
+    up_z_frame=Frame(direction_frame_z)
+    up_z_frame.pack(side=TOP)
+    
+    btn_up_z=Button(up_z_frame,image=up_icn,command=direction_up_z,borderwidth=0)
+    btn_up_z.pack(side=TOP)
+    
+    #for down Button
+    def direction_down_z():
+        global distance_trv_z
+        travel_val=speed_entry_z.entr_speed.get()
+        distance_trv_z=Decimal(distance_trv_z)-Decimal(travel_val)
+        lbl_z.config(text=distance_trv_z)
+        print(distance_trv_dwn)
+    
+    dwn_z_frame=Frame(direction_frame_z)
+    dwn_z_frame.pack(side=TOP)
+
+    btn_z_dwn=Button(dwn_z_frame,image=dwn_icn,command=direction_down_z,borderwidth=0)
+    btn_z_dwn.pack(side=TOP)
+
     mainloop()

@@ -2,9 +2,10 @@ from tkinter import *
 from tkinter.messagebox import *
 from zaber_motion.ascii import Connection
 from zaber_motion.exceptions.connection_failed_exception import ConnectionFailedException
-
+import sys
 
 port=('COM1',"COM2","COM3","COM4","COM5")
+
 class radio_bar(Toplevel):
 
     def __init__(self, parent=None, **options):
@@ -52,10 +53,14 @@ class radio_bar(Toplevel):
 if __name__=='__main__':
     root=Tk()
     radio_bar()
-    with Connection.open_serial_port(port_select) as connection:
-        Button(root,text='Try to Press this').pack(side=TOP)
-    
-        print(port_select)
+    try:
+        with Connection.open_serial_port(port_select) as connection:
+            Button(root,text='Try to Press this').pack(side=TOP)
+        
+            print(port_select)
+    except NameError:
+        showerror("Cannot Proceed","You did not select any port. Cannot proceed further.\n Closing Program")
+        sys.exit()
     root.mainloop()
     
 
