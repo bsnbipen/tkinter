@@ -1,14 +1,15 @@
 from tkinter import *
-from tkinter.messagebox import *
 
-class Quitter(Frame):
-    def __init__(self, parent=None):
-        Frame.__init__(self,parent)
-        self.pack()
-        widget=Button(self, text='Quit',command=self.quit)
-        widget.pack(side=LEFT,expand=YES,fill=BOTH)
-    def quit(self):
-        ans=askokcancel('Verify Exit','Really Quit')
-        if ans: Frame.quit(self)
+def fetch():
+        print('Input=."%s"' %ent.get())
 
-if __name__=='__main__':Quitter().mainloop()
+root=Tk()
+ent=Entry(root)
+ent.insert(0,'Type Words here')
+ent.pack(side=TOP,fill=X)
+
+ent.focus()
+ent.bind('<Return>',(lambda event: fetch()))
+btn=Button(root,text='Fetch',command=fetch)
+btn.pack(side=LEFT)
+root.mainloop()
