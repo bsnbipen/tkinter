@@ -99,7 +99,7 @@ if __name__=="__main__":
 
     # get the current working directory
     cw_dir=getcwd()
-    img_dir=cw_dir+r"/tkinter/images/direction.png"
+    img_dir=cw_dir+r"/images/direction.png"
     
     #travel distance variables
     distance_trv=1
