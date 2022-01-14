@@ -4,7 +4,7 @@ from tkinter import font
 from os import *
 from PIL import Image, ImageTk
 from decimal import *
-
+import numpy as np
 
 getcontext().prec=5
 class speedentry(Frame):
@@ -120,7 +120,7 @@ if __name__=="__main__":
     def direction_up():
         global distance_trv
         travel_val=speed_entry.entr_speed.get()
-        distance_trv=Decimal(travel_val)+Decimal(distance_trv)
+        distance_trv=np.float32(travel_val)+np.float32(distance_trv)
         lbl_x.config(text=distance_trv)
         print(distance_trv)
 
@@ -137,7 +137,7 @@ if __name__=="__main__":
     def direction_left():
         global distance_trv_lft
         travel_val=speed_entry.entr_speed.get()
-        distance_trv_lft=Decimal(distance_trv_lft)-Decimal(travel_val)
+        distance_trv_lft=distance_trv_lft-np.around(travel_val)
         lbl_y.config(text=distance_trv_lft)
         print(distance_trv_lft)
     
@@ -165,7 +165,7 @@ if __name__=="__main__":
     def direction_down():
         global distance_trv
         travel_val=speed_entry.entr_speed.get()
-        distance_trv=Decimal(distance_trv)-Decimal(travel_val)
+        distance_trv=np.float32(distance_trv)-np.float32(travel_val)
         lbl_x.config(text=distance_trv)
         print(distance_trv_dwn)
     
@@ -189,7 +189,7 @@ if __name__=="__main__":
     def direction_up_z():
         global distance_trv_z
         travel_val=speed_entry_z.entr_speed.get()
-        distance_trv_z=Decimal(travel_val)+Decimal(distance_trv_z)
+        distance_trv_z=np.float32(travel_val)+np.float32(distance_trv_z)
         lbl_z.config(text=distance_trv_z)
         print(distance_trv_z)
 
@@ -204,7 +204,7 @@ if __name__=="__main__":
     def direction_down_z():
         global distance_trv_z
         travel_val=speed_entry_z.entr_speed.get()
-        distance_trv_z=Decimal(distance_trv_z)-Decimal(travel_val)
+        distance_trv_z=np.float32(distance_trv_z)-np.float32(travel_val)
         lbl_z.config(text=distance_trv_z)
         print(distance_trv_dwn)
     
