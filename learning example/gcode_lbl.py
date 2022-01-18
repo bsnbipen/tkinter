@@ -8,7 +8,27 @@ import numpy as np
 from numpy.core._exceptions import _UFuncNoLoopError
 
 
+class absolute_movement(axis,distance):
+    def __init__ (axis,distance):
+        self.axis=axis
+        self.distance=distance
+        if self.axis=="x":
+            axis_x.move_absolute(self.distance, Units.LENGTH_MILLIMETRES)
+        elif axis=="y":
+            axis_y.move_absolute(self.distance, Units.LENGTH_MILLIMETRES)
+        elif axis=="z":
+            axis_z.move_aboslute(self.distance,Units.LENGTH_MILLIMETRES)
 
+class relative_movement(axis,distance):
+    def __init__(axis,distance):
+        self.axis=axis;
+        self.distance=distance
+        if axis=="x":
+            axis_x.move_relative(self.distance, Units.LENGTH_MILLIMETRES)
+        elif axis=="y":
+            axis_y.move_relative(self.distance, Units.LENGTH_MILLIMETRES)
+        elif axis=="z":
+            axis_z.move_relative(self.distance,Units.LENGTH_MILLIMETRES)
 
 class lbl_entr(Frame):
     def __init__(self,lbl_name,parent=None):
@@ -62,7 +82,9 @@ class gcode(Frame):
                         list_key.append(key)
                 for key_s in list_key():
                     coordinate_movement.pop(key_s)
-                
+                for axis,distance in coordinate_movement.items():
+                    absolute_movement(axis,distance)
+
 
                         
         
@@ -70,9 +92,12 @@ class gcode(Frame):
             elif self.var.get()=="G92 G01":
                 for key,value in coordinate_movement.items():
                     if not value:
-                        coordinate_movement.pop(key)
-                    else:
-                        print('axis_{}.move_relative({}, Units.LENGTH_MILLIMETRES)'.format(key,np.round(float(value),decimals=5)))
+                        list_key.append(key)
+                    for key_s in list_key():
+                        coordinate_movement.pop(key_s)
+                    for axis,distance in coordinate_movement.items():
+                        relative_movement(axis,distance)
+
             else:
                 showinfo("G-Code Not Selected","Select a G-Code")
                         
