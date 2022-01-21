@@ -1,6 +1,11 @@
+<<<<<<< HEAD
 import decimal
 from distutils import command
 import re
+=======
+from cgitb import text
+from json.tool import main
+>>>>>>> 9dd81647c4ed569017d3be2efed58a5f953d13c4
 from tkinter import *
 import os
 from tkinter.messagebox import *
@@ -15,8 +20,12 @@ from numpy.core._exceptions import _UFuncNoLoopError
 import sys
 from PIL import Image, ImageTk
 from decimal import *
+<<<<<<< HEAD
 import numpy as np
 from zaber_motion.ascii import DeviceIO
+=======
+from tkinter import ttk
+>>>>>>> 9dd81647c4ed569017d3be2efed58a5f953d13c4
 
 port=('COM1',"COM2","COM3","COM4","COM5","COM6")
 class speed_label(Frame):
@@ -243,8 +252,17 @@ if __name__=='__main__':
 
     try:
         with Connection.open_serial_port(port_select) as connection:
-            main_frame=Frame(root)
-            main_frame.pack()
+            #notebook
+            notebook=ttk.Notebook(root)
+            notebook.pack(pady=10,expand=True)
+            
+            main_frame=Frame(notebook)
+            main_frame.pack(fill="Both",expand=YES)
+            main_frame_2=Frame(notebook)
+            main_frame_2.pack(fill="Both",expand=YES)
+            notebook.add(main_frame,text="Stage and Pump Control")
+            notebook.add(main_frame_2,text="G-Code Translation")
+
             frame_ab_rel=Frame(root)
             frame_ab_rel.pack()
             #travel distance variables
