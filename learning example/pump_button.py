@@ -4,6 +4,7 @@ from glob import glob
 import random
 import os
 from PIL import Image, ImageTk
+from zaber_motion.ascii import DeviceIO
 
 os_dir=os.getcwd()
 img_dir=(os_dir+r"\tkinter\images")
