@@ -1,3 +1,5 @@
+from cgitb import text
+from json.tool import main
 from tkinter import *
 import os
 from tkinter.messagebox import *
@@ -7,6 +9,7 @@ from zaber_motion.exceptions.no_device_found_exception import NoDeviceFoundExcep
 import sys
 from PIL import Image, ImageTk
 from decimal import *
+from tkinter import ttk
 
 port=('COM1',"COM2","COM3","COM4","COM5","COM6")
 
@@ -90,8 +93,17 @@ if __name__=='__main__':
 
     try:
         with Connection.open_serial_port(port_select) as connection:
-            main_frame=Frame(root)
-            main_frame.pack()
+            #notebook
+            notebook=ttk.Notebook(root)
+            notebook.pack(pady=10,expand=True)
+            
+            main_frame=Frame(notebook)
+            main_frame.pack(fill="Both",expand=YES)
+            main_frame_2=Frame(notebook)
+            main_frame_2.pack(fill="Both",expand=YES)
+            notebook.add(main_frame,text="Stage and Pump Control")
+            notebook.add(main_frame_2,text="G-Code Translation")
+
             frame_ab_rel=Frame(root)
             frame_ab_rel.pack()
             #travel distance variables

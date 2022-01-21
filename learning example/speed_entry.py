@@ -1,10 +1,15 @@
+from cProfile import label
+from cgitb import text
 import decimal
+from sys import byteorder
 from tkinter import *
 from tkinter import font
 from os import *
+from turtle import left
 from PIL import Image, ImageTk
 from decimal import *
 import numpy as np
+from tkinter import ttk
 
 getcontext().prec=5
 class speedentry(Frame):
@@ -17,11 +22,74 @@ class speedentry(Frame):
         self.entr_speed.pack(side=RIGHT,expand=YES,fill=BOTH)
         self.lbl_speed.pack(side=LEFT,expand=YES,fill=BOTH)
 
+class frame_entry(Frame):
+    def __init__ (self,axis,parent=None):
+        Frame.__init__(self,parent)
+        self.pack(side=TOP)
+        self.axis=axis
+        self.text="{} Axis Origin".format(axis)
+        self.lbl_axis=Label(self,text=self.text,font=("courier",12,"bold"))
+        self.entr_val=Entry(self,width=3,borderwidth=2)
+        self.entr_val.insert(0,"0")
+        self.lbl_axis.pack(side=LEFT)
+        self.entr_val.pack(side=RIGHT)
+        
+
+class origin(Frame):
+    def __init__(self, parent=None):
+        Frame.__init__(self,parent)
+        self.entr_x=frame_entry("X")
+        self.entr_y=frame_entry("Y")
+        self.entr_z=frame_entry("Z")
+        Button(self,text="Select",command=self.select).pack(side=RIGHT,expand=YES,fill=Y,anchor="e")
+        Button(self,text="RESET",command=self.reset).pack(side=LEFT,expand=YES,fill=Y,anchor="w")
+
+    
+
+    def select(self):
+        global translate_x, translate_y, translate_z
+        translate_x= self.entr_x.entr_val.get()
+        translate_y= self.entr_y.entr_val.get()
+        translate_z=self.entr_z.entr_val.get()
+        self.entr_x.entr_val.config(state=DISABLED)
+        self.entr_z.entr_val.config(state=DISABLED)
+        self.entr_y.entr_val.config(state=DISABLED)
+
+    def reset(self):
+        self.entr_x.entr_val.config(state=NORMAL)
+        self.entr_z.entr_val.config(state=NORMAL)
+        self.entr_y.entr_val.config(state=NORMAL)
+        
+
 
 if __name__=="__main__":
     root=Tk()
-    main_frame=Frame(root)
-    main_frame.pack()
+
+    notebook=ttk.Notebook(root)
+    notebook.pack(pady=10)
+            
+    main_frame=Frame(notebook)
+    main_frame.pack(fill=BOTH)
+    main_frame_2=Frame(notebook)
+    main_frame_2.pack(fill=BOTH)
+    notebook.add(main_frame,text="Stage and Pump Control")
+    notebook.add(main_frame_2,text="G-Code Translation")
+    #for notebook G-Code Translation
+    frame_g_code=Frame(main_frame_2)
+    frame_g_code.pack(side=TOP)
+    #label:
+    frame_label_info=Frame(frame_g_code)
+    frame_label_info.pack(side=TOP)
+    lbL_info=Label(frame_label_info,text="Origin Selection:",font=("helvetica","18","bold"))
+    lbL_info.pack(side=LEFT,expand=YES,fill="x",anchor="w")
+    frame_origin_display=Frame(frame_g_code)
+    frame_origin_display.pack(side=TOP)
+    lbl_origin_x=Label(frame_origin_display,text="X Axis:",font=("courier",14,"bold"))
+    lbl_origin_x.pack(side=LEFT,expand=YES,fill="x",anchor="w")
+    entr_origin_x=Entry(frame_origin_display,)
+    
+
+
     #travel distance variables
     distance_trv=1
     distance_trv_lft=1
@@ -99,7 +167,7 @@ if __name__=="__main__":
 
     # get the current working directory
     cw_dir=getcwd()
-    img_dir=cw_dir+r"/images/direction.png"
+    img_dir=cw_dir+r"/tkinter/images/direction.png"
     
     #travel distance variables
     distance_trv=1
